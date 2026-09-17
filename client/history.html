@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AudioLens — History</title><link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+ <a class="logo" href="index.html"><div class="logo-icon">◉</div>AudioLens</a>
+ <nav><a href="analyzer.html">Analyzer</a><a href="history.html">History</a></nav>
+ <div class="nav-actions"><a class="nav-button" href="analyzer.html">+ New Analysis</a></div>
+</header>
+
+<main class="page">
+ <div class="section-heading" style="margin-bottom:28px"><div class="eyebrow"><span></span>YOUR WORKSPACE</div><h1>Analysis <span>History</span></h1><p>View previous recordings and reopen their AI insights.</p></div>
+
+ <div class="app-shell">
+  <div class="panel" style="padding:18px;margin-bottom:14px;display:flex;gap:10px">
+   <input class="input" placeholder="Search recordings..." style="flex:1">
+   <select class="select" style="max-width:150px"><option>All analyses</option><option>Completed</option><option>Processing</option></select>
+  </div>
+
+  <div class="panel" style="overflow:hidden">
+   <table class="table">
+    <thead><tr><th>RECORDING</th><th>DURATION</th><th>ANALYZED</th><th>STATUS</th><th></th></tr></thead>
+    <tbody>
+     <tr><td><b>Team Meeting — Q3 Planning</b><br><span style="font-size:7px;color:#969ba6">team-meeting.wav</span></td><td>28:42</td><td>Today, 8:31 PM</td><td><span class="status done">Complete</span></td><td><a href="results.html" style="color:#856cc1;font-weight:700">Open →</a></td></tr>
+     <tr><td><b>Customer Interview</b><br><span style="font-size:7px;color:#969ba6">customer-interview.mp3</span></td><td>41:18</td><td>Yesterday</td><td><span class="status done">Complete</span></td><td><a href="results.html" style="color:#856cc1;font-weight:700">Open →</a></td></tr>
+     <tr><td><b>Research Discussion</b><br><span style="font-size:7px;color:#969ba6">research.wav</span></td><td>17:06</td><td>08 Sep 2026</td><td><span class="status done">Complete</span></td><td><a href="results.html" style="color:#856cc1;font-weight:700">Open →</a></td></tr>
+     <tr><td><b>Product Brainstorm</b><br><span style="font-size:7px;color:#969ba6">brainstorm.m4a</span></td><td>32:50</td><td>07 Sep 2026</td><td><span class="status processing">Processing</span></td><td><a href="processing.html" style="color:#856cc1;font-weight:700">View →</a></td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</main>
+</body>
+</html>

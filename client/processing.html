@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AudioLens — Processing</title><link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar"><a class="logo" href="index.html"><div class="logo-icon">◉</div>AudioLens</a><nav><a href="analyzer.html">Analyzer</a><a href="history.html">History</a></nav><div class="nav-actions"><a class="nav-button" href="analyzer.html">New Analysis</a></div></header>
+
+<main class="page" style="min-height:calc(100vh - 58px);display:grid;place-items:center">
+ <section class="panel" style="width:min(650px,100%);padding:42px;text-align:center">
+  <div class="eyebrow"><span></span>AI ENGINE RUNNING</div>
+  <h1 style="font-family:'Space Grotesk';font-size:30px;margin-top:18px">Analyzing your <span style="background:linear-gradient(90deg,#9573dc,#e6a3aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent">audio</span></h1>
+  <p style="font-size:10px;color:#737b8b;line-height:1.8;margin:12px auto;max-width:440px">AudioLens is transcribing speech, detecting speakers and extracting the most useful signals.</p>
+
+  <div style="height:8px;background:#e8edf0;border-radius:20px;overflow:hidden;margin-top:28px">
+   <div id="bar" style="height:100%;width:15%;background:linear-gradient(90deg,#9877d7,#e7a3a9);border-radius:20px;transition:width .6s"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:8px;color:#858b98;margin-top:8px"><span id="stage">Preparing audio...</span><span id="percent">15%</span></div>
+
+  <div class="grid-3" style="margin-top:30px">
+   <div class="panel" style="padding:14px;box-shadow:none"><b style="font-size:9px">01</b><p style="font-size:8px;color:#7c8391;margin-top:5px">Transcription</p></div>
+   <div class="panel" style="padding:14px;box-shadow:none"><b style="font-size:9px">02</b><p style="font-size:8px;color:#7c8391;margin-top:5px">Speaker AI</p></div>
+   <div class="panel" style="padding:14px;box-shadow:none"><b style="font-size:9px">03</b><p style="font-size:8px;color:#7c8391;margin-top:5px">Insights</p></div>
+  </div>
+ </section>
+</main>
+<script>
+let progress=15;
+const stages=["Preparing audio...","Detecting speech...","Separating speakers...","Generating insights...","Finalizing analysis..."];
+let i=0;
+const timer=setInterval(()=>{
+ progress+=17;
+ i=Math.min(i+1,stages.length-1);
+ document.getElementById("bar").style.width=Math.min(progress,100)+"%";
+ document.getElementById("percent").textContent=Math.min(progress,100)+"%";
+ document.getElementById("stage").textContent=stages[i];
+ if(progress>=100){clearInterval(timer);setTimeout(()=>location.href="results.html",500);}
+},650);
+</script>
+</body>
+</html>

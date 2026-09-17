@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AudioLens — New Analysis</title><link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+ <a class="logo" href="index.html"><div class="logo-icon">◉</div>AudioLens</a>
+ <nav><a href="index.html#features">Features</a><a href="analyzer.html">Analyzer</a><a href="index.html#how">How it works</a><a href="history.html">History</a></nav>
+ <div class="nav-actions"><a href="#">Sign In</a><a class="nav-button" href="analyzer.html">New Analysis</a></div>
+</header>
+
+<main class="page">
+ <div class="section-heading"><div class="eyebrow"><span></span>NEW AUDIO ANALYSIS</div><h1>Upload your <span>audio</span></h1><p>Choose a recording and configure what AudioLens should analyze.</p></div>
+
+ <div class="app-shell grid-2">
+  <section class="panel" style="padding:25px">
+   <div class="panel-title">Audio source</div><div class="panel-subtitle">MP3, WAV, M4A, MP4 or FLAC</div>
+
+   <label id="dropZone" style="display:flex;min-height:290px;margin-top:20px;border:2px dashed #b8c8d2;border-radius:8px;background:rgba(245,249,251,.7);align-items:center;justify-content:center;text-align:center;flex-direction:column;padding:25px">
+    <div style="width:46px;height:46px;border-radius:11px;background:#eee9fc;display:grid;place-items:center;color:#856cc1;font-size:22px">↑</div>
+    <strong style="font-family:'Space Grotesk';font-size:15px;margin-top:13px">Drop your audio here</strong>
+    <span style="font-size:9px;color:#7d8492;margin-top:7px">or click to browse files</span>
+    <input id="audioFile" type="file" accept="audio/*,video/mp4" style="display:none">
+    <button type="button" class="nav-button" style="margin-top:17px" onclick="document.getElementById('audioFile').click()">Choose Audio File</button>
+    <span id="selectedFile" style="font-size:8px;color:#856cc1;margin-top:12px">No file selected</span>
+   </label>
+
+   <div style="margin-top:17px;padding:13px;background:white;border:1px solid #e0e5e9;border-radius:6px;display:flex;align-items:center;gap:12px">
+    <div style="width:31px;height:31px;border-radius:7px;background:#f7eaf1;display:grid;place-items:center;color:#b36d8d">●</div>
+    <div><b style="font-size:10px">Record directly</b><div style="font-size:8px;color:#808696;margin-top:2px">Use your microphone instead</div></div>
+    <button class="nav-button" style="margin-left:auto" type="button" onclick="alert('Microphone recording can be connected with MediaRecorder API.')">Start Recording</button>
+   </div>
+  </section>
+
+  <section class="panel" style="padding:25px">
+   <div class="panel-title">Analysis settings</div><div class="panel-subtitle">Choose the intelligence you need.</div>
+
+   <div style="margin-top:24px">
+    <label class="form-label">Language</label>
+    <select class="select"><option>Auto Detect</option><option>English</option><option>Hindi</option><option>Spanish</option><option>French</option></select>
+   </div>
+
+   <div style="margin-top:17px">
+    <label class="form-label">Analysis type</label>
+    <div style="display:grid;gap:8px">
+     <label class="panel" style="padding:12px;box-shadow:none"><input type="checkbox" checked> <span style="font-size:9px">Smart transcription</span></label>
+     <label class="panel" style="padding:12px;box-shadow:none"><input type="checkbox" checked> <span style="font-size:9px">Speaker detection</span></label>
+     <label class="panel" style="padding:12px;box-shadow:none"><input type="checkbox" checked> <span style="font-size:9px">Sentiment analysis</span></label>
+     <label class="panel" style="padding:12px;box-shadow:none"><input type="checkbox" checked> <span style="font-size:9px">Keywords & topics</span></label>
+     <label class="panel" style="padding:12px;box-shadow:none"><input type="checkbox" checked> <span style="font-size:9px">AI summary & action items</span></label>
+    </div>
+   </div>
+
+   <button class="primary-button" style="width:100%;justify-content:center;margin-top:22px;padding:13px" onclick="location.href='processing.html'">Start AI Analysis →</button>
+   <p style="font-size:8px;color:#8a909d;text-align:center;margin-top:9px">Demo mode: processing screen is simulated.</p>
+  </section>
+ </div>
+</main>
+<script>
+document.getElementById("audioFile").addEventListener("change",function(){
+ const el=document.getElementById("selectedFile");
+ el.textContent=this.files.length ? this.files[0].name : "No file selected";
+});
+</script>
+</body>
+</html>
