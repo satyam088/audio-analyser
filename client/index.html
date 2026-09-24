@@ -3,559 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AudioLens - AI Audio Intelligence Platform</title>
 
-    <title>AudioLens - AI Audio Analyzer</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f6f4fe',
+                100: '#eee9fc',
+                200: '#ddd3fa',
+                300: '#c2b0f4',
+                400: '#a387ec',
+                500: '#856cc1',
+                600: '#7965b7',
+                700: '#6958a9',
+                800: '#544688',
+                900: '#43386c',
+              },
+              dark: '#20233d',
+            },
+            fontFamily: {
+              sans: ['"DM Sans"', 'Arial', 'sans-serif'],
+              display: ['"Space Grotesk"', 'Arial', 'sans-serif'],
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="font-sans text-[#20233d] min-h-screen">
 
 <!-- ================= NAVBAR ================= -->
+<header class="w-full bg-white/95 border-b border-[#c8d6df] sticky top-0 z-50 backdrop-blur-md">
+    <div class="h-[58px] flex items-center justify-between px-4 sm:px-6 lg:px-14">
+        <a class="flex items-center gap-2.5 font-display text-sm font-bold tracking-tight text-[#20233d]" href="index.html">
+            <div class="w-6 h-6 rounded-md bg-[#eee7ff] text-[#6958a9] grid place-items-center text-xs">◉</div>
+            <span>AudioLens</span>
+        </a>
 
-<header class="navbar">
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-xs font-medium text-[#444863]">
+            <a href="#features" class="hover:text-[#7965b7] transition-colors">Features</a>
+            <a href="analyzer.html" class="hover:text-[#7965b7] transition-colors">Analyzer</a>
+            <a href="#how" class="hover:text-[#7965b7] transition-colors">How it works</a>
+            <a href="history.html" class="hover:text-[#7965b7] transition-colors">History</a>
+        </nav>
 
-    <div class="logo">
-        <div class="logo-icon">◉</div>
-        <span>AudioLens</span>
+        <!-- Desktop Action Buttons -->
+        <div class="hidden md:flex nav-actions items-center gap-4 text-xs font-medium">
+            <a class="signin text-[#34384d] hover:text-[#7965b7] transition-colors" href="javascript:void(0)" onclick="openAuthModal('login')">Sign In</a>
+            <a class="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-md bg-white border border-[#c8d6df] text-xs font-semibold hover:border-[#856cc1] hover:text-[#6958a9] transition-all shadow-sm" href="analyzer.html">
+                Start Analyzing
+            </a>
+        </div>
+
+        <!-- Mobile Hamburger Menu Button -->
+        <button
+            id="mobileMenuBtn"
+            type="button"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            class="md:hidden w-9 h-9 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 flex items-center justify-center transition-colors shadow-sm"
+            onclick="toggleMobileMenu()"
+        >
+            <svg class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
     </div>
 
-    <nav>
-     <a href="#features">Features</a>
-     <a href="analyzer.html">Analyzer</a>
-     <a href="#how">How it works</a>
-     <a href="history.html">History</a>
-    </nav>
+    <!-- Mobile Dropdown Drawer -->
+    <div
+        id="mobileMenu"
+        class="hidden md:hidden bg-white/95 border-t border-slate-100 px-4 py-4 space-y-3 backdrop-blur-md shadow-lg transition-all"
+    >
+        <div class="flex flex-col space-y-1.5 text-xs font-medium text-slate-700">
+            <a href="#features" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">Features</a>
+            <a href="analyzer.html" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">Analyzer</a>
+            <a href="#how" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">How it works</a>
+            <a href="history.html" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">History</a>
+        </div>
 
-    <div class="nav-actions">
-        <a class="signin" href="#">Sign In</a>
-        <a class="nav-button" href="#analyzer">Start Analyzing</a>
+        <div class="pt-3 border-t border-slate-100 flex flex-col gap-2 nav-actions">
+            <a class="signin w-full text-center px-3 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors" href="javascript:void(0)" onclick="closeMobileMenu(); openAuthModal('login')">
+                Sign In
+            </a>
+            <a class="w-full text-center px-3 py-2.5 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold shadow-md transition-all" href="analyzer.html" onclick="closeMobileMenu()">
+                Start Analyzing →
+            </a>
+        </div>
     </div>
-
 </header>
 
-
 <!-- ================= HERO ================= -->
-
-<section class="hero">
-
-    <div class="hero-outline">
-
-        <div class="eyebrow">
-            <span></span>
-            AI-POWERED AUDIO INTELLIGENCE
-        </div>
-
-        <h1>
-            Turn Raw Audio Into
-            <span>Actionable Intelligence</span>
-        </h1>
-
-        <p class="hero-description">
-            Upload conversations, meetings, interviews and recordings.
-            Our AI transcribes, analyzes and extracts meaningful insights
-            from every second of audio.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#analyzer" class="primary-button">
-                Analyze Audio
-                <span>→</span>
-            </a>
-
-            <a href="#features" class="secondary-button">
-                Explore Features
-            </a>
-
-        </div>
-
-
-        <!-- STATS -->
-
-        <div class="stats">
-
-            <div class="stat">
-                <strong>99.4%</strong>
-                <small>Transcription Accuracy</small>
-            </div>
-
-            <div class="stat">
-                <strong>&lt; 5s</strong>
-                <small>AI Processing Time</small>
-            </div>
-
-            <div class="stat">
-                <strong>120+</strong>
-                <small>Languages Supported</small>
-            </div>
-
-        </div>
-
+<section class="max-w-4xl mx-auto px-4 pt-16 pb-12 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-purple-200/80 text-[11px] font-bold text-[#6958a9] tracking-wider uppercase mb-6 shadow-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#856cc1] animate-pulse"></span>
+        AI-Powered Audio Intelligence
     </div>
 
-</section>
-
-
-<!-- ================= TRUST ================= -->
-
-<section class="trusted">
-
-    <p>BUILT FOR MODERN AUDIO WORKFLOWS</p>
-
-    <div class="trusted-items">
-        <span>Meetings</span>
-        <span>Interviews</span>
-        <span>Podcasts</span>
-        <span>Research</span>
-        <span>Customer Calls</span>
-        <span>Lectures</span>
-    </div>
-
-</section>
-
-
-<!-- ================= ANALYZER ================= -->
-
-<section id="analyzer" class="analyzer-section">
-
-    <div class="section-heading">
-
-        <div class="eyebrow">
-            <span></span>
-            AUDIO ANALYZER
-        </div>
-
-        <h2>
-            Understand every
-            <span>second of audio</span>
-        </h2>
-
-        <p>
-            Upload an audio file and let AI uncover the information
-            hidden inside it.
-        </p>
-
-    </div>
-
-
-    <div class="analyzer-container">
-
-        <!-- LEFT -->
-
-        <div class="upload-panel">
-
-            <div class="panel-header">
-
-                <div>
-                    <small>NEW ANALYSIS</small>
-                    <h3>Upload your audio</h3>
-                </div>
-
-                <div class="status-dot"></div>
-
-            </div>
-
-
-            <div class="upload-box">
-
-                <div class="upload-icon">
-                    ↑
-                </div>
-
-                <h3>Drop your audio here</h3>
-
-                <p>
-                    or click to browse files from your computer
-                </p>
-
-                <span class="supported">
-                    MP3 · WAV · M4A · MP4 · FLAC
-                </span>
-
-                <button class="upload-button">
-                    Choose Audio File
-                </button>
-
-            </div>
-
-
-            <div class="record-option">
-
-                <div class="mic">
-                    ●
-                </div>
-
-                <div>
-                    <strong>Record directly</strong>
-                    <p>Analyze audio from your microphone</p>
-                </div>
-
-                <button class="record-button">
-                    Start Recording
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- RIGHT -->
-
-        <div class="preview-panel">
-
-            <div class="panel-header">
-
-                <div>
-                    <small>AI PIPELINE</small>
-                    <h3>What you'll get</h3>
-                </div>
-
-            </div>
-
-
-            <div class="pipeline">
-
-                <div class="pipeline-item">
-
-                    <div class="pipeline-number">01</div>
-
-                    <div>
-                        <strong>Smart Transcription</strong>
-                        <p>
-                            Convert speech into accurate,
-                            speaker-aware text.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="pipeline-item">
-
-                    <div class="pipeline-number">02</div>
-
-                    <div>
-                        <strong>Audio Intelligence</strong>
-                        <p>
-                            Detect sentiment, topics,
-                            keywords and important moments.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="pipeline-item">
-
-                    <div class="pipeline-number">03</div>
-
-                    <div>
-                        <strong>AI Summary</strong>
-                        <p>
-                            Get concise summaries and
-                            automatically generated action items.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="pipeline-item">
-
-                    <div class="pipeline-number">04</div>
-
-                    <div>
-                        <strong>Speaker Insights</strong>
-                        <p>
-                            Understand who said what and
-                            analyze individual speakers.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= FEATURES ================= -->
-
-<section id="features" class="features-section">
-
-    <div class="section-heading">
-
-        <div class="eyebrow">
-            <span></span>
-            ENGINEERED FOR CLARITY
-        </div>
-
-        <h2>
-            More than just
-            <span>transcription</span>
-        </h2>
-
-    </div>
-
-
-    <div class="feature-grid">
-
-        <article class="feature-card">
-
-            <div class="feature-icon">◫</div>
-
-            <h3>Speaker Detection</h3>
-
-            <p>
-                Automatically identify different speakers
-                and organize conversations into clean,
-                readable dialogue.
-            </p>
-
-            <div class="feature-tag">
-                SPEAKER AI
-            </div>
-
-        </article>
-
-
-        <article class="feature-card">
-
-            <div class="feature-icon">✦</div>
-
-            <h3>Sentiment Analysis</h3>
-
-            <p>
-                Understand the emotional tone of conversations
-                and discover positive, neutral and negative moments.
-            </p>
-
-            <div class="feature-tag">
-                EMOTION AI
-            </div>
-
-        </article>
-
-
-        <article class="feature-card">
-
-            <div class="feature-icon">⌁</div>
-
-            <h3>Smart Summaries</h3>
-
-            <p>
-                Transform long recordings into concise summaries,
-                decisions and automatically extracted action items.
-            </p>
-
-            <div class="feature-tag">
-                GENERATIVE AI
-            </div>
-
-        </article>
-
-
-        <article class="feature-card">
-
-            <div class="feature-icon">#</div>
-
-            <h3>Keyword Detection</h3>
-
-            <p>
-                Instantly discover important terms, topics,
-                names and phrases mentioned throughout your audio.
-            </p>
-
-            <div class="feature-tag">
-                NLP ENGINE
-            </div>
-
-        </article>
-
-
-        <article class="feature-card">
-
-            <div class="feature-icon">◷</div>
-
-            <h3>Chapter Generation</h3>
-
-            <p>
-                Automatically divide long recordings into
-                meaningful chapters with timestamps.
-            </p>
-
-            <div class="feature-tag">
-                AUTO CHAPTERS
-            </div>
-
-        </article>
-
-
-        <article class="feature-card">
-
-            <div class="feature-icon">↗</div>
-
-            <h3>Export Anywhere</h3>
-
-            <p>
-                Export transcripts, summaries and insights
-                into JSON, TXT, PDF and other formats.
-            </p>
-
-            <div class="feature-tag">
-                API READY
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
-
-
-<!-- ================= DEMO RESULT ================= -->
-
-<section class="result-section">
-
-    <div class="section-heading">
-
-        <div class="eyebrow">
-            <span></span>
-            AI ANALYSIS PREVIEW
-        </div>
-
-        <h2>
-            From conversation to
-            <span>insight</span>
-        </h2>
-
-    </div>
-
-
-    <div class="result-window">
-
-        <!-- transcript -->
-
-        <div class="transcript">
-
-            <div class="window-header">
-
-                <div class="window-dots">
-                    <i></i>
-                    <i></i>
-                    <i></i>
-                </div>
-
-                <span>team-meeting.wav</span>
-
-                <small>ANALYSIS COMPLETE</small>
-
-            </div>
-
-
-            <div class="transcript-content">
-
-                <div class="speaker purple">
-                    Speaker 01
-                    <span>00:14 - 00:31</span>
-                </div>
-
-                <p>
-                    We should move the core dataset migration
-                    before the end of the quarter.
-                </p>
-
-
-                <div class="speaker pink">
-                    Speaker 02
-                    <span>00:31 - 00:48</span>
-                </div>
-
-                <p>
-                    Agreed. I'll prepare the migration plan
-                    and share it with the engineering team.
-                </p>
-
-
-                <div class="highlight-search">
-                    <span>⌕</span>
-                    migration plan
-                    <small>2 matches found</small>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- AI SUMMARY -->
-
-        <aside class="ai-summary">
-
-            <small>AI SMART SUMMARY</small>
-
-            <h3>Key Insights</h3>
-
-            <ul>
-                <li>Dataset migration is targeted for Q3.</li>
-                <li>Engineering team will prepare the migration plan.</li>
-                <li>Core data pipeline is the primary priority.</li>
-            </ul>
-
-
-            <h3 class="chapter-title">
-                Automatically Generated Chapters
-            </h3>
-
-            <div class="chapter">
-                <span>1. Migration Planning</span>
-                <time>00:14</time>
-            </div>
-
-            <div class="chapter">
-                <span>2. Engineering Tasks</span>
-                <time>00:31</time>
-            </div>
-
-        </aside>
-
-    </div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <div class="footer-logo">
-        <div class="logo-icon">◉</div>
-        AudioLens
-    </div>
-
-    <p>
-        AI-powered audio analysis for smarter decisions.
+    <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#20233d] leading-[1.15] mb-5">
+        Turn Raw Audio Into<br>
+        <span class="bg-gradient-to-r from-[#856cc1] to-[#e6a3aa] bg-clip-text text-transparent">Actionable Intelligence</span>
+    </h1>
+
+    <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed mb-8">
+        Upload conversations, meetings, interviews and recordings.
+        Our AI pipeline transcribes speech with Whisper and extracts deep intelligence with Google Gemini.
     </p>
 
-    <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#">Documentation</a>
-        <a href="#">Contact</a>
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-14">
+        <a href="analyzer.html" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold shadow-md hover:shadow-lg transition-all">
+            Analyze Audio & Video <span>→</span>
+        </a>
+        <a href="#features" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-white/80 border border-[#c8d6df] text-[#20233d] text-xs font-medium hover:bg-white transition-all shadow-sm">
+            Explore Features
+        </a>
     </div>
 
+    <!-- STATS -->
+    <div class="grid grid-cols-3 max-w-md mx-auto divide-x divide-slate-200/80 bg-white/60 backdrop-blur-sm border border-slate-200/80 rounded-xl p-3 shadow-sm">
+        <div class="px-2">
+            <strong class="font-display text-lg font-bold text-[#20233d] block">90.4%</strong>
+            <small class="text-[10px] text-slate-500 font-medium">Whisper Accuracy</small>
+        </div>
+        <div class="px-2">
+            <strong class="font-display text-lg font-bold text-[#20233d] block">&lt; 12s</strong>
+            <small class="text-[10px] text-slate-500 font-medium">Gemini Summary</small>
+        </div>
+        <div class="px-2">
+            <strong class="font-display text-lg font-bold text-[#20233d] block">120+</strong>
+            <small class="text-[10px] text-slate-500 font-medium">Audio Languages</small>
+        </div>
+    </div>
+</section>
+
+<!-- ================= TRUST ================= -->
+<section class="max-w-4xl mx-auto px-4 py-8 text-center border-t border-slate-200/60">
+    <p class="text-[10px] font-bold tracking-widest text-slate-500 uppercase mb-4">Built For Modern Audio Workflows</p>
+    <div class="flex flex-wrap justify-center gap-3 sm:gap-6 text-xs font-semibold text-slate-600">
+        <span class="px-3 py-1 rounded-full bg-white/70 border border-slate-200/80">Meetings</span>
+        <span class="px-3 py-1 rounded-full bg-white/70 border border-slate-200/80">Interviews</span>
+        <span class="px-3 py-1 rounded-full bg-white/70 border border-slate-200/80">Podcasts</span>
+        <span class="px-3 py-1 rounded-full bg-white/70 border border-slate-200/80">Lectures</span>
+        <span class="px-3 py-1 rounded-full bg-white/70 border border-slate-200/80">Customer Calls</span>
+    </div>
+</section>
+
+<!-- ================= ANALYZER SECTION ================= -->
+<section id="analyzer" class="max-w-5xl mx-auto px-4 py-12">
+    <div class="text-center max-w-xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-purple-200 text-[10px] font-bold text-[#6958a9] uppercase mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#856cc1]"></span> Audio Analyzer
+        </div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#20233d]">
+            Understand every <span class="bg-gradient-to-r from-[#856cc1] to-[#e6a3aa] bg-clip-text text-transparent">second of audio</span>
+        </h2>
+        <p class="text-xs text-slate-600 mt-2">
+            Upload an audio or video file and let AI uncover the structured intelligence hidden inside it.
+        </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- LEFT: UPLOAD -->
+        <div class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <small class="text-[10px] font-bold tracking-wider uppercase text-slate-400 block">NEW ANALYSIS</small>
+                    <h3 class="font-display text-base font-bold text-[#20233d]">Upload media file</h3>
+                </div>
+                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+            </div>
+
+            <!-- Upload drop zone -->
+            <div id="homeDropZone" class="border-2 border-dashed border-[#b8c8d2] hover:border-[#856cc1] bg-[#f5f9fb]/75 hover:bg-[#f4effe] rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200">
+                <input id="homeMediaInput" type="file" accept="audio/*,video/*,.mp3,.wav,.m4a,.aac,.ogg,.flac,.mp4,.webm,.mov,.mkv,.avi" class="hidden">
+                <div class="w-12 h-12 rounded-xl bg-[#eee9fc] text-[#856cc1] text-2xl font-bold grid place-items-center mb-3">↑</div>
+                <h3 class="font-display text-sm font-bold text-slate-800">Drop your audio or video here</h3>
+                <p class="text-xs text-slate-500 mt-1 mb-3">or click to browse files from your computer</p>
+                <span class="inline-block px-2.5 py-1 rounded bg-white text-[10px] font-mono text-slate-500 border border-slate-200 mb-4">
+                    MP3 · WAV · M4A · MP4 · FLAC · MOV
+                </span>
+                <button type="button" class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold transition-all shadow-sm">
+                    Choose Media File
+                </button>
+            </div>
+
+            <!-- Record live speech -->
+            <div class="mt-4 p-3.5 bg-white border border-slate-200/80 rounded-xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 grid place-items-center text-sm font-bold">●</div>
+                    <div>
+                        <strong class="text-xs font-semibold text-slate-800 block">Record directly</strong>
+                        <p class="text-[11px] text-slate-500">Capture speech from your microphone</p>
+                    </div>
+                </div>
+                <a href="analyzer.html" class="inline-flex items-center justify-center px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-medium text-slate-700 hover:border-purple-300 hover:text-purple-700 bg-white transition-all shadow-sm">
+                    Start Recording
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT: PIPELINE PREVIEW -->
+        <div class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+            <div class="mb-5">
+                <small class="text-[10px] font-bold tracking-wider uppercase text-slate-400 block">AI PIPELINE</small>
+                <h3 class="font-display text-base font-bold text-[#20233d]">What you'll receive</h3>
+            </div>
+
+            <div class="space-y-3.5">
+                <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50/70 border border-slate-100">
+                    <div class="w-7 h-7 rounded-lg bg-purple-100 text-[#795ebd] font-mono text-xs font-bold grid place-items-center shrink-0">01</div>
+                    <div>
+                        <strong class="text-xs font-semibold text-slate-800 block">Whisper Speech-to-Text</strong>
+                        <p class="text-[11px] text-slate-500 leading-snug">Time-aligned dialogue transcription with speaker identification.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50/70 border border-slate-100">
+                    <div class="w-7 h-7 rounded-lg bg-purple-100 text-[#795ebd] font-mono text-xs font-bold grid place-items-center shrink-0">02</div>
+                    <div>
+                        <strong class="text-xs font-semibold text-slate-800 block">Executive Gemini Summary</strong>
+                        <p class="text-[11px] text-slate-500 leading-snug">Concise executive overviews, key takeaways, and action items.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50/70 border border-slate-100">
+                    <div class="w-7 h-7 rounded-lg bg-purple-100 text-[#795ebd] font-mono text-xs font-bold grid place-items-center shrink-0">03</div>
+                    <div>
+                        <strong class="text-xs font-semibold text-slate-800 block">Sentiment & Keyword Dynamics</strong>
+                        <p class="text-[11px] text-slate-500 leading-snug">Tone detection, sentiment scoring, and extracted subject tags.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50/70 border border-slate-100">
+                    <div class="w-7 h-7 rounded-lg bg-purple-100 text-[#795ebd] font-mono text-xs font-bold grid place-items-center shrink-0">04</div>
+                    <div>
+                        <strong class="text-xs font-semibold text-slate-800 block">Interactive Follow-up Q&A</strong>
+                        <p class="text-[11px] text-slate-500 leading-snug">Ask questions directly to Google Gemini about your recording.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features" class="max-w-5xl mx-auto px-4 py-12">
+    <div class="text-center max-w-xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-purple-200 text-[10px] font-bold text-[#6958a9] uppercase mb-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#856cc1]"></span> Engineered for Clarity
+        </div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#20233d]">
+            More than just <span class="bg-gradient-to-r from-[#856cc1] to-[#e6a3aa] bg-clip-text text-transparent">transcription</span>
+        </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-[#eee9fc] text-[#856cc1] grid place-items-center text-lg font-bold mb-4">◫</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Speaker Diarization</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Automatically partition recordings into distinct speaker turns with precise start and end timestamps.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-purple-50 text-[10px] font-bold text-[#795ebd] w-max">SPEAKER AI</span>
+        </article>
+
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-pink-50 text-[#e6a3aa] grid place-items-center text-lg font-bold mb-4">✦</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Sentiment Dynamics</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Analyze the conversational tone across positive, neutral, and critical remarks throughout the discussion.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-pink-50 text-[10px] font-bold text-[#c25977] w-max">EMOTION AI</span>
+        </article>
+
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-purple-50 text-[#795ebd] grid place-items-center text-lg font-bold mb-4">⌁</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Actionable Takeaways</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Turn hour-long meetings into structured tasks, decisions, and automatically assigned action items.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-purple-50 text-[10px] font-bold text-[#795ebd] w-max">GENERATIVE AI</span>
+        </article>
+
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 grid place-items-center text-lg font-bold mb-4">#</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Topic & Keyword Tags</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Discover crucial terms, products, and agenda topics mentioned during the conversation.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-slate-100 text-[10px] font-bold text-slate-600 w-max">NLP ENGINE</span>
+        </article>
+
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 grid place-items-center text-lg font-bold mb-4">◷</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Automated Chapters</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Divide lengthy discussions into navigable chapters with clickable timestamps for easy reviewing.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-amber-50 text-[10px] font-bold text-amber-700 w-max">AUTO CHAPTERS</span>
+        </article>
+
+        <article class="bg-white/85 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 grid place-items-center text-lg font-bold mb-4">↗</div>
+                <h3 class="font-display text-sm font-bold text-slate-800 mb-2">Export Formats</h3>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Download full transcripts and formatted intelligence summaries into TXT, JSON, and API payloads.
+                </p>
+            </div>
+            <span class="inline-block px-2.5 py-1 rounded bg-emerald-50 text-[10px] font-bold text-emerald-700 w-max">EXPORT READY</span>
+        </article>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="max-w-5xl mx-auto px-4 py-12 border-t border-slate-200/60 mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+    <div class="flex items-center gap-2 font-display font-bold text-slate-800">
+        <div class="w-5 h-5 rounded bg-[#eee7ff] text-[#6958a9] grid place-items-center text-[10px]">◉</div>
+        <span>AudioLens AI</span>
+    </div>
+    <p>© 2026 AudioLens. AI-powered audio intelligence for smarter decisions.</p>
+    <div class="flex gap-4">
+        <a href="analyzer.html" class="hover:text-slate-800">Analyzer</a>
+        <a href="history.html" class="hover:text-slate-800">History</a>
+    </div>
 </footer>
 
+<!-- Modular JavaScript Files -->
+<script src="js/ui.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/recorder.js"></script>
+<script src="js/analyzer.js"></script>
+<script src="script.js"></script>
 
+<script>
+// Wire home drag & drop zone
+const homeMediaInput = document.getElementById("homeMediaInput");
+const homeDropZone = document.getElementById("homeDropZone");
+
+if (homeMediaInput) {
+  homeMediaInput.addEventListener("change", function () {
+    if (this.files.length) {
+      handleHomeUpload(this.files[0]);
+    }
+  });
+}
+
+if (homeDropZone) {
+  homeDropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    homeDropZone.classList.add("border-[#856cc1]", "bg-[#efeaf8]");
+  });
+  homeDropZone.addEventListener("dragleave", () => {
+    homeDropZone.classList.remove("border-[#856cc1]", "bg-[#efeaf8]");
+  });
+  homeDropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    homeDropZone.classList.remove("border-[#856cc1]", "bg-[#efeaf8]");
+    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+      handleHomeUpload(e.dataTransfer.files[0]);
+    }
+  });
+}
+</script>
 </body>
 </html>

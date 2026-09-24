@@ -1,80 +1,345 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>AudioLens — Analysis Results</title><link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-.wave{height:95px;display:flex;align-items:center;gap:3px;padding:15px;background:#f4f7f9;border-radius:6px;overflow:hidden}
-.wave i{width:3px;border-radius:4px;background:#9b82cf;display:block}
-.tab{border:0;background:transparent;padding:9px 12px;font-size:9px;color:#777e8e;border-bottom:2px solid transparent}
-.tab.active{color:#6e57a7;border-color:#9c7ad4;font-weight:700}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AudioLens — Intelligence Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f6f4fe',
+              100: '#eee9fc',
+              200: '#ddd3fa',
+              300: '#c2b0f4',
+              400: '#a387ec',
+              500: '#856cc1',
+              600: '#7965b7',
+              700: '#6958a9',
+              800: '#544688',
+              900: '#43386c',
+            },
+            dark: '#20233d',
+          },
+          fontFamily: {
+            sans: ['"DM Sans"', 'Arial', 'sans-serif'],
+            display: ['"Space Grotesk"', 'Arial', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="tailwind.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-<header class="navbar">
- <a class="logo" href="index.html"><div class="logo-icon">◉</div>AudioLens</a>
- <nav><a href="analyzer.html">Analyzer</a><a href="history.html">History</a></nav>
- <div class="nav-actions"><a class="nav-button" href="analyzer.html">+ New Analysis</a></div>
-</header>
 
-<main class="page" style="padding-top:45px">
- <div class="app-shell">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px">
-   <div><div class="eyebrow"><span></span>ANALYSIS COMPLETE</div><h1 style="font-family:'Space Grotesk';font-size:27px;margin-top:10px">Team Meeting <span style="color:#9273c7">·</span> Q3 Planning</h1><p style="font-size:9px;color:#7d8492;margin-top:5px">team-meeting.wav · 28:42 · analyzed just now</p></div>
-   <button class="nav-button" onclick="alert('Export menu can be connected to PDF/JSON generation.')">Export ↓</button>
-  </div>
+<body class="font-sans text-[#20233d] min-h-screen">
 
-  <div class="grid-3" style="margin-bottom:18px">
-   <div class="panel" style="padding:18px"><span class="pill">SENTIMENT</span><div style="font-family:'Space Grotesk';font-size:23px;margin-top:12px">Positive</div><p style="font-size:8px;color:#7c8391;margin-top:4px">68% overall confidence</p></div>
-   <div class="panel" style="padding:18px"><span class="pill">SPEAKERS</span><div style="font-family:'Space Grotesk';font-size:23px;margin-top:12px">4</div><p style="font-size:8px;color:#7c8391;margin-top:4px">Detected participants</p></div>
-   <div class="panel" style="padding:18px"><span class="pill">KEYWORDS</span><div style="font-family:'Space Grotesk';font-size:23px;margin-top:12px">37</div><p style="font-size:8px;color:#7c8391;margin-top:4px">Important terms found</p></div>
-  </div>
+<!-- ================= NAVBAR ================= -->
+<header class="w-full bg-white/95 border-b border-[#c8d6df] sticky top-0 z-50 backdrop-blur-md">
+  <div class="h-[58px] flex items-center justify-between px-4 sm:px-6 lg:px-14">
+    <a class="flex items-center gap-2.5 font-display text-sm font-bold tracking-tight text-[#20233d]" href="index.html">
+      <div class="w-6 h-6 rounded-md bg-[#eee7ff] text-[#6958a9] grid place-items-center text-xs">◉</div>
+      <span>AudioLens</span>
+    </a>
 
-  <div class="panel" style="padding:17px;margin-bottom:18px">
-   <div style="display:flex;justify-content:space-between;align-items:center"><div><div class="panel-title">Audio timeline</div><div class="panel-subtitle">Click a moment to jump through the recording.</div></div><span class="pill">28:42</span></div>
-   <div class="wave" id="wave"></div>
-   <div style="display:flex;justify-content:space-between;font-size:7px;color:#8a909d;margin-top:5px"><span>00:00</span><span>14:21</span><span>28:42</span></div>
-  </div>
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center gap-7 text-xs font-medium text-[#444863]">
+      <a href="index.html#features" class="hover:text-[#7965b7] transition-colors">Features</a>
+      <a href="analyzer.html" class="hover:text-[#7965b7] transition-colors">Analyzer</a>
+      <a href="index.html#how" class="hover:text-[#7965b7] transition-colors">How it works</a>
+      <a href="history.html" class="hover:text-[#7965b7] transition-colors">History</a>
+    </nav>
 
-  <div class="panel" style="padding:0;overflow:hidden">
-   <div style="display:flex;border-bottom:1px solid #e0e5e9;padding:0 10px">
-    <button class="tab active">Transcript</button><button class="tab">Speakers</button><button class="tab">Sentiment</button><button class="tab">Keywords</button>
-   </div>
-   <div class="grid-2" style="gap:0">
-    <div style="padding:24px;border-right:1px solid #e0e5e9">
-     <div style="font-size:8px;color:#876bc0;font-weight:700">Speaker 01 <span style="color:#858b98;font-weight:400;margin-left:7px">00:14</span></div>
-     <p style="font-size:10px;color:#565d6f;line-height:1.8;margin-top:7px">We should move the core dataset migration before the end of the quarter.</p>
-     <div style="font-size:8px;color:#bd789a;font-weight:700;margin-top:20px">Speaker 02 <span style="color:#858b98;font-weight:400;margin-left:7px">00:31</span></div>
-     <p style="font-size:10px;color:#565d6f;line-height:1.8;margin-top:7px">Agreed. I'll prepare the migration plan and share it with the engineering team.</p>
-     <div style="font-size:8px;color:#876bc0;font-weight:700;margin-top:20px">Speaker 03 <span style="color:#858b98;font-weight:400;margin-left:7px">01:04</span></div>
-     <p style="font-size:10px;color:#565d6f;line-height:1.8;margin-top:7px">Let's also make sure the new pipeline supports the reporting requirements.</p>
+    <!-- Desktop Action Buttons -->
+    <div class="hidden md:flex nav-actions items-center gap-4 text-xs font-medium">
+      <a class="signin text-[#34384d] hover:text-[#7965b7] transition-colors" href="javascript:void(0)" onclick="openAuthModal('login')">Sign In</a>
+      <a class="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-md bg-white border border-[#c8d6df] text-xs font-semibold hover:border-[#856cc1] hover:text-[#6958a9] transition-all shadow-sm" href="analyzer.html">
+        + New Analysis
+      </a>
     </div>
 
-    <aside style="padding:24px;background:#fafbfc">
-     <div class="pill">AI SMART SUMMARY</div>
-     <h3 class="panel-title" style="margin-top:14px">Key insights</h3>
-     <ul style="padding-left:15px;margin-top:10px">
-      <li style="font-size:8px;color:#687082;line-height:1.8;margin-bottom:7px">Dataset migration is targeted for Q3.</li>
-      <li style="font-size:8px;color:#687082;line-height:1.8;margin-bottom:7px">Engineering will prepare the migration plan.</li>
-      <li style="font-size:8px;color:#687082;line-height:1.8;margin-bottom:7px">Reporting support is a pipeline requirement.</li>
-     </ul>
-     <h3 class="panel-title" style="margin-top:22px">Action items</h3>
-     <div style="margin-top:10px;padding:10px;background:white;border:1px solid #e1e5e9;border-radius:5px;font-size:8px;color:#626a7a">□ Prepare migration plan</div>
-     <div style="margin-top:7px;padding:10px;background:white;border:1px solid #e1e5e9;border-radius:5px;font-size:8px;color:#626a7a">□ Validate reporting pipeline</div>
-     <h3 class="panel-title" style="margin-top:22px">Chapters</h3>
-     <div style="display:flex;justify-content:space-between;font-size:8px;margin-top:10px"><span>1. Migration Planning</span><span>00:14</span></div>
-     <div style="display:flex;justify-content:space-between;font-size:8px;margin-top:10px"><span>2. Engineering Tasks</span><span>08:29</span></div>
-     <div style="display:flex;justify-content:space-between;font-size:8px;margin-top:10px"><span>3. Reporting</span><span>17:42</span></div>
-    </aside>
-   </div>
+    <!-- Mobile Hamburger Menu Button -->
+    <button
+      id="mobileMenuBtn"
+      type="button"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      class="md:hidden w-9 h-9 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 flex items-center justify-center transition-colors shadow-sm"
+      onclick="toggleMobileMenu()"
+    >
+      <svg class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </div>
- </div>
+
+  <!-- Mobile Dropdown Drawer -->
+  <div
+    id="mobileMenu"
+    class="hidden md:hidden bg-white/95 border-t border-slate-100 px-4 py-4 space-y-3 backdrop-blur-md shadow-lg transition-all"
+  >
+    <div class="flex flex-col space-y-1.5 text-xs font-medium text-slate-700">
+      <a href="index.html#features" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">Features</a>
+      <a href="analyzer.html" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">Analyzer</a>
+      <a href="index.html#how" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">How it works</a>
+      <a href="history.html" class="px-3 py-2 rounded-lg hover:bg-purple-50 hover:text-[#7965b7] transition-colors" onclick="closeMobileMenu()">History</a>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex flex-col gap-2 nav-actions">
+      <a class="signin w-full text-center px-3 py-2 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors" href="javascript:void(0)" onclick="closeMobileMenu(); openAuthModal('login')">
+        Sign In
+      </a>
+      <a class="w-full text-center px-3 py-2.5 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold shadow-md transition-all" href="analyzer.html" onclick="closeMobileMenu()">
+        + New Analysis
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= DASHBOARD CONTENT ================= -->
+<main class="max-w-6xl mx-auto px-4 py-8">
+
+  <!-- TOP HEADER & ACTIONS -->
+  <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+    <div>
+      <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/80 border border-purple-200 text-[10px] font-bold text-[#6958a9] uppercase mb-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#856cc1]"></span> AI Intelligence Report
+      </div>
+      <h1 id="analysisTitle" class="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#20233d]">
+        Loading Analysis...
+      </h1>
+      <p id="analysisMeta" class="text-xs text-slate-500 mt-1">
+        Connecting to AudioLens backend...
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2.5">
+      <button class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#856cc1] hover:text-[#6958a9] transition-all shadow-sm" onclick="exportAnalysis('txt')">
+        Export TXT ↓
+      </button>
+      <button class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#856cc1] hover:text-[#6958a9] transition-all shadow-sm" onclick="exportAnalysis('json')">
+        Export JSON ↓
+      </button>
+      <a class="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold shadow-sm transition-all" href="analyzer.html">
+        + New File
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI SUMMARY METRICS -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200" id="sentimentPill">SENTIMENT</span>
+      <div id="sentimentValue" class="font-display text-2xl font-bold text-[#20233d] mt-2">
+        --
+      </div>
+      <p id="sentimentDesc" class="text-[11px] text-slate-500 mt-1">Overall emotional tone</p>
+    </div>
+
+    <div class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">SPEAKERS</span>
+      <div id="speakersCount" class="font-display text-2xl font-bold text-[#20233d] mt-2">
+        --
+      </div>
+      <p id="speakersDesc" class="text-[11px] text-slate-500 mt-1">Distinct participants detected</p>
+    </div>
+
+    <div class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">LANGUAGE & TOPICS</span>
+      <div id="languageValue" class="font-display text-2xl font-bold text-[#20233d] mt-2">
+        --
+      </div>
+      <p id="keywordsSummary" class="text-[11px] text-slate-500 mt-1 truncate">Primary language & keywords</p>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE MEDIA PLAYER -->
+  <section class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 sm:p-6 shadow-sm mb-6">
+    <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+      <div>
+        <h2 class="font-display text-sm font-bold text-slate-800">Media Playback & Waveform Timeline</h2>
+        <p class="text-xs text-slate-500">Click any waveform bar or transcript segment to seek audio</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-md bg-purple-50 text-purple-700 border border-purple-200" id="durationBadge">00:00</span>
+        <button id="playPauseBtn" class="px-4 py-1.5 rounded-lg bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold transition-all shadow-sm" onclick="togglePlayPause()">
+          ▶ Play
+        </button>
+      </div>
+    </div>
+
+    <!-- Hidden Native Audio / Video Player Elements -->
+    <div class="rounded-xl overflow-hidden" id="playerWrapper">
+      <audio id="audioPlayer" preload="metadata" class="hidden"></audio>
+      <video id="videoPlayer" preload="metadata" class="hidden w-full max-h-80 rounded-xl bg-black mb-3"></video>
+    </div>
+
+    <!-- Clickable Waveform Bars -->
+    <div class="flex items-center gap-1 h-14 px-3 py-2 bg-slate-50 rounded-xl border border-slate-200 overflow-hidden cursor-pointer" id="waveBarContainer" title="Click anywhere along the waveform to seek audio"></div>
+    <div class="flex justify-between text-[11px] font-mono text-slate-400 mt-2 px-1">
+      <span id="timeCurrent">00:00</span>
+      <span id="timeTotal">00:00</span>
+    </div>
+  </section>
+
+  <!-- MAIN TABBED ANALYSIS CONTAINER -->
+  <div class="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm mb-12">
+    <!-- Tab Navigation -->
+    <div class="flex border-b border-slate-200/80 overflow-x-auto bg-slate-50/50">
+      <button class="tab-btn active py-3.5 px-5 text-xs font-semibold border-b-2 border-[#795ebd] text-[#795ebd] bg-purple-50/60 whitespace-nowrap transition-all" onclick="switchTab('transcriptTab', this)">
+        📝 Transcript & Segments
+      </button>
+      <button class="tab-btn py-3.5 px-5 text-xs font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-800 whitespace-nowrap transition-all" onclick="switchTab('summaryTab', this)">
+        ✨ AI Summary & Action Items
+      </button>
+      <button class="tab-btn py-3.5 px-5 text-xs font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-800 whitespace-nowrap transition-all" onclick="switchTab('chatTab', this)">
+        💬 Ask AI Follow-up (Gemini Q&A)
+      </button>
+      <button class="tab-btn py-3.5 px-5 text-xs font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-800 whitespace-nowrap transition-all" onclick="switchTab('topicsTab', this)">
+        🏷️ Keywords & Sentiment
+      </button>
+    </div>
+
+    <!-- TAB 1: TRANSCRIPT -->
+    <div id="transcriptTab" class="tab-content active p-5 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <input
+          id="transcriptSearch"
+          type="text"
+          placeholder="Search words in transcript..."
+          class="flex-1 min-w-[220px] px-3.5 py-2 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#856cc1] transition-all"
+          oninput="filterTranscript()"
+        >
+        <button class="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#856cc1] hover:text-[#6958a9] transition-all shadow-sm" onclick="copyTranscript()">
+          📋 Copy Transcript
+        </button>
+      </div>
+
+      <div id="segmentsList" class="max-h-[550px] overflow-y-auto pr-2 space-y-2">
+        <!-- Segments injected dynamically by results.js -->
+      </div>
+    </div>
+
+    <!-- TAB 2: AI SUMMARY & ACTION ITEMS -->
+    <div id="summaryTab" class="tab-content hidden p-5 sm:p-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">EXECUTIVE SUMMARY</span>
+          <h3 class="font-display text-sm font-bold text-slate-800 mt-3">Overview</h3>
+          <div id="summaryOverview" class="text-xs text-slate-600 leading-relaxed mt-2 p-3 bg-slate-50/70 rounded-xl border border-slate-100">
+            No summary available.
+          </div>
+
+          <h3 class="font-display text-sm font-bold text-slate-800 mt-6">Key Discussion Points</h3>
+          <ul id="keyPointsList" class="list-disc pl-5 mt-2 text-xs text-slate-600 space-y-1.5 leading-relaxed">
+            <!-- Injected dynamically -->
+          </ul>
+        </div>
+
+        <aside class="space-y-6">
+          <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">DELIVERABLES</span>
+            <h3 class="font-display text-sm font-bold text-slate-800 mt-2 mb-3">Action Items</h3>
+            <div id="actionItemsList" class="space-y-2">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+
+          <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">NAVIGATION</span>
+            <h3 class="font-display text-sm font-bold text-slate-800 mt-2 mb-3">Recorded Chapters</h3>
+            <div id="chaptersList" class="space-y-2">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- TAB 3: GEMINI FOLLOW-UP CHAT -->
+    <div id="chatTab" class="tab-content hidden p-5 sm:p-6">
+      <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+        <div>
+          <h3 class="font-display text-sm font-bold text-slate-800">Ask Google Gemini About This Recording</h3>
+          <p class="text-xs text-slate-500">Ask questions, verify statements, summarize topics, or generate reports.</p>
+        </div>
+        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">GEMINI POWERED</span>
+      </div>
+
+      <!-- Quick prompts -->
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-100 text-[11px] text-slate-700 transition-colors" onclick="sendQuickPrompt('What were the main conclusions and takeaways?')">
+          💡 Main conclusions?
+        </button>
+        <button class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-100 text-[11px] text-slate-700 transition-colors" onclick="sendQuickPrompt('List all assigned action items and responsibilities.')">
+          📋 Assigned action items?
+        </button>
+        <button class="px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-100 text-[11px] text-slate-700 transition-colors" onclick="sendQuickPrompt('Who spoke the most and what were their primary arguments?')">
+          👥 Speaker contributions?
+        </button>
+      </div>
+
+      <!-- Messages container -->
+      <div id="chatMessages" class="min-h-[300px] max-h-[460px] overflow-y-auto space-y-3 p-4 bg-slate-50/60 rounded-xl border border-slate-200/80 mb-4">
+        <!-- Chat bubbles injected dynamically -->
+      </div>
+
+      <!-- Input box -->
+      <form id="chatForm" onsubmit="handleSendQuestion(event)" class="flex gap-2">
+        <input
+          id="chatQuestionInput"
+          type="text"
+          placeholder="Ask a question about this recording..."
+          class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#856cc1] transition-all"
+        >
+        <button
+          id="chatSendBtn"
+          type="submit"
+          class="px-5 py-2.5 rounded-xl bg-[#20233d] hover:bg-[#34384d] text-white text-xs font-semibold shadow-sm transition-all"
+        >
+          Send →
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 4: TOPICS & SENTIMENT -->
+    <div id="topicsTab" class="tab-content hidden p-5 sm:p-6">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-5">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">SENTIMENT DYNAMICS</span>
+          <div class="mt-3 flex items-center gap-3">
+            <span id="sentimentTag" class="font-display text-xl font-bold text-slate-800">Positive</span>
+            <span id="sentimentConfidence" class="text-xs font-mono text-purple-700 font-semibold px-2 py-0.5 bg-purple-100 rounded">Confidence: 85%</span>
+          </div>
+          <p id="sentimentExplanation" class="text-xs text-slate-600 mt-3 leading-relaxed">
+            Conversational tone is balanced and forward-looking.
+          </p>
+        </div>
+
+        <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-5">
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-[#795ebd] border border-purple-200">KEYWORD CLOUD</span>
+          <p class="text-xs text-slate-500 mt-2 mb-3">Click any keyword chip to jump to occurrences in the transcript:</p>
+          <div id="keywordsCloud" class="flex flex-wrap gap-2">
+            <!-- Keyword chips injected dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
-<script>
-const wave=document.getElementById("wave");
-for(let i=0;i<120;i++){const x=document.createElement("i");x.style.height=(10+Math.abs(Math.sin(i*.73))*55)+"px";wave.appendChild(x);}
-</script>
+
+<!-- Modular JavaScript Files -->
+<script src="js/ui.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/results.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

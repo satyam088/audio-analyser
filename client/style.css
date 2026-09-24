@@ -1286,3 +1286,470 @@ footer p {
         overflow-x: auto;
     }
 }
+
+/* =========================================================
+   INTERACTIVE MEDIA PLAYER & WAVEFORM
+========================================================= */
+
+.player-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #dbe3e8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(50, 75, 95, 0.07);
+    margin-bottom: 22px;
+}
+
+.media-player-wrapper {
+    margin-top: 14px;
+}
+
+.media-player-wrapper audio {
+    width: 100%;
+    height: 44px;
+    border-radius: 8px;
+    outline: none;
+}
+
+.media-player-wrapper video {
+    width: 100%;
+    max-height: 420px;
+    background: #0f121e;
+    border-radius: 8px;
+    outline: none;
+    display: block;
+}
+
+.wave-container {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 12px 16px;
+    background: #f4f7f9;
+    border-radius: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.wave-container i {
+    flex: 1;
+    min-width: 3px;
+    max-width: 4px;
+    border-radius: 4px;
+    background: #9b82cf;
+    opacity: 0.55;
+    transition: opacity 0.2s, height 0.2s, background 0.2s;
+}
+
+.wave-container i:hover {
+    opacity: 1;
+    background: #7351ba;
+}
+
+.wave-container i.active {
+    opacity: 1;
+    background: #5b3fa6;
+}
+
+/* =========================================================
+   TABS & SEGMENTS
+========================================================= */
+
+.tab-nav {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid #e0e5e9;
+    padding: 0 16px;
+    background: #fcfdfe;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.tab-btn {
+    border: none;
+    background: transparent;
+    padding: 12px 18px;
+    font-family: "Space Grotesk", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6d7586;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.tab-btn:hover {
+    color: #3b3f54;
+}
+
+.tab-btn.active {
+    color: #6951a8;
+    border-bottom-color: #8b6cc7;
+    background: rgba(238, 231, 255, 0.4);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.segment-item {
+    padding: 14px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background 0.2s, border-color 0.2s;
+    margin-bottom: 10px;
+    background: #fafbfc;
+}
+
+.segment-item:hover {
+    background: #f1f4f8;
+}
+
+.segment-item.is-playing {
+    background: #f3edff;
+    border-color: #c9b5f5;
+}
+
+.segment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.segment-speaker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6e54aa;
+}
+
+.segment-time-badge {
+    font-size: 10px;
+    color: #7b8292;
+    background: #e9eff4;
+    padding: 2px 7px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.segment-time-badge:hover {
+    background: #7961bd;
+    color: white;
+}
+
+.segment-text {
+    font-size: 12px;
+    line-height: 1.7;
+    color: #3b4152;
+}
+
+/* =========================================================
+   GEMINI AI FOLLOW-UP Q&A CHAT
+========================================================= */
+
+.chat-panel {
+    display: flex;
+    flex-direction: column;
+    height: 580px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #e7ecf0;
+    background: #fbfcfe;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header-title {
+    font-family: "Space Grotesk", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2b2e42;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-header-spark {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    background: #eee8fc;
+    color: #755bb6;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: #f9fbfd;
+}
+
+.chat-bubble {
+    max-width: 82%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.65;
+    word-break: break-word;
+    animation: fadeInMsg 0.25s ease-out;
+}
+
+@keyframes fadeInMsg {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #443c68, #2a2c44);
+    color: #ffffff;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 4px 14px rgba(45, 40, 70, 0.15);
+}
+
+.chat-bubble.assistant {
+    align-self: flex-start;
+    background: #ffffff;
+    color: #2b2e42;
+    border: 1px solid #e1e7ec;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 4px 14px rgba(50, 75, 95, 0.05);
+}
+
+.chat-bubble.assistant p {
+    margin-bottom: 8px;
+}
+
+.chat-bubble.assistant p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-bubble.assistant ul, 
+.chat-bubble.assistant ol {
+    margin: 6px 0 6px 18px;
+}
+
+.chat-bubble.assistant li {
+    margin-bottom: 4px;
+}
+
+.chat-bubble.assistant code {
+    background: #f0f3f6;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.quick-prompts {
+    padding: 10px 18px;
+    background: #fbfcfe;
+    border-top: 1px solid #eef2f5;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.quick-pill {
+    background: #f0ecf9;
+    color: #634ba2;
+    border: 1px solid #dfd5f5;
+    padding: 5px 11px;
+    border-radius: 14px;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.quick-pill:hover {
+    background: #e2d7f7;
+    color: #4b3684;
+    transform: translateY(-1px);
+}
+
+.chat-input-bar {
+    padding: 12px 18px;
+    background: white;
+    border-top: 1px solid #e6ebef;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #d4dbe2;
+    border-radius: 7px;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.chat-input:focus {
+    border-color: #8b6cc7;
+    box-shadow: 0 0 0 3px rgba(139, 108, 199, 0.15);
+}
+
+.typing-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #9b82cf;
+    border-radius: 50%;
+    margin-right: 4px;
+    animation: typingBounce 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+}
+
+/* =========================================================
+   ACTION ITEMS CHECKLIST
+========================================================= */
+
+.action-checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: white;
+    border: 1px solid #e1e7ec;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: #3f4556;
+    line-height: 1.5;
+    transition: background 0.2s;
+}
+
+.action-checkbox-item:hover {
+    background: #fbfcfe;
+}
+
+.action-checkbox-item input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: #795eb9;
+    cursor: pointer;
+}
+
+.action-checkbox-item.checked span {
+    text-decoration: line-through;
+    color: #9aa1b0;
+}
+
+/* =========================================================
+   TOAST NOTIFICATIONS
+========================================================= */
+
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+}
+
+.toast {
+    background: #25283f;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(25, 30, 45, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: toastSlide 0.3s ease-out;
+}
+
+.toast.error {
+    background: #7a2636;
+}
+
+.toast.success {
+    background: #265c43;
+}
+
+@keyframes toastSlide {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* =========================================================
+   AUTH MODAL
+========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 35, 45, 0.45);
+    backdrop-filter: blur(4px);
+    display: none;
+    place-items: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.modal-backdrop.open {
+    display: grid;
+}
+
+.modal-card {
+    background: white;
+    width: min(440px, 100%);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(30, 45, 60, 0.2);
+    padding: 30px;
+    position: relative;
+    animation: modalPop 0.25s ease-out;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.94); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: #838a9a;
+    cursor: pointer;
+}

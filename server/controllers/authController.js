@@ -65,14 +65,28 @@ exports.registerUser = async (req, res) => {
 
     // Send OTP email
     const emailContent = registrationOtpEmail(name, otp);
-    await sendEmail(email, emailContent.subject, emailContent.html).catch(err =>
-      console.error("Email error:", err)
-    );;
+    const emailResult = await sendEmail(email, emailContent.subject, emailContent.html, {
+      otp,
+      type: "registration",
+    });
 
-    res.status(200).json({
+    const responsePayload = {
       message: "OTP sent to your email. Please verify to complete registration.",
       email,
-    });
+    };
+
+    if (emailResult && emailResult.isSandboxRestriction) {
+      responsePayload.warning = "Email delivery to external inbox restricted by Resend sandbox domain.";
+      if (process.env.NODE_ENV !== "production") {
+        responsePayload.devOtp = otp;
+      }
+    } else if (emailResult && emailResult.provider === "dev_fallback") {
+      if (process.env.NODE_ENV !== "production") {
+        responsePayload.devOtp = otp;
+      }
+    }
+
+    res.status(200).json(responsePayload);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -145,9 +159,19 @@ exports.resendOtp = async (req, res) => {
     await user.save();
 
     const emailContent = registrationOtpEmail(user.name, otp);
-    await sendEmail(email, emailContent.subject, emailContent.html);
+    const emailResult = await sendEmail(email, emailContent.subject, emailContent.html, {
+      otp,
+      type: "resend_otp",
+    });
 
-    res.json({ message: "New OTP sent to your email." });
+    const responsePayload = { message: "New OTP sent to your email." };
+    if (emailResult && (emailResult.isSandboxRestriction || emailResult.provider === "dev_fallback")) {
+      if (process.env.NODE_ENV !== "production") {
+        responsePayload.devOtp = otp;
+      }
+    }
+
+    res.json(responsePayload);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -215,11 +239,19 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     const emailContent = forgotPasswordOtpEmail(user.name, otp);
-    await sendEmail(email, emailContent.subject, emailContent.html).catch(err =>
-      console.error("Email error:", err)
-    );;
+    const emailResult = await sendEmail(email, emailContent.subject, emailContent.html, {
+      otp,
+      type: "forgot_password",
+    });
 
-    res.json({ message: "Password reset OTP sent to your email.", email });
+    const responsePayload = { message: "Password reset OTP sent to your email.", email };
+    if (emailResult && (emailResult.isSandboxRestriction || emailResult.provider === "dev_fallback")) {
+      if (process.env.NODE_ENV !== "production") {
+        responsePayload.devOtp = otp;
+      }
+    }
+
+    res.json(responsePayload);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
