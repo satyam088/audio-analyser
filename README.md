@@ -77,9 +77,9 @@ Refer to the individual project directories for component-specific setup instruc
 ## Contributors
 
 **Satyam Chauhan**
-**@satym088
+-@satym088
 **Sheetal Katiyar
-@sheetal-in
+-@sheetal-in
 
 
 ---
