@@ -76,10 +76,11 @@ Refer to the individual project directories for component-specific setup instruc
 
 ## Contributors
 
-**Satyam Chauhan**
--@satym088
-**Sheetal Katiyar
--@sheetal-in
+- **Satyam Chauhan**  
+  [@satym088](https://github.com/satym088)
+
+- **Sheetal Katiyar**  
+  [@sheetal-in](https://github.com/sheetal-in)
 
 
 ---
